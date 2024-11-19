@@ -1,6 +1,8 @@
 package controllers
 
 import (
+	"fmt"
+	"github.com/Francismensah/url-shortner-app/internal/url"
 	"html/template"
 	"net/http"
 	"strings"
@@ -21,10 +23,12 @@ func Shorten(w http.ResponseWriter, r *http.Request) {
 		originalURL = "https://" + originalURL
 	}
 
-	// shorten the URL
+	hash, shortURL := url.Shorten(originalURL)
+
+	fmt.Println(hash)
 
 	data := map[string]string{
-		"ShortURL": originalURL,
+		"ShortURL": shortURL,
 	}
 	t, err := template.ParseFiles("internal/views/shorten.html")
 	if err != nil {
